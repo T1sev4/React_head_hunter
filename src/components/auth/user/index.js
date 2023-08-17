@@ -31,10 +31,23 @@ export default function UserLogin(){
         <form>
           <input className="input" type="" placeholder="Введите код"/>
           <p>Повторить можно через 00:48 </p>
-          <button className="button button-primary">Продолжить</button>
+          <button onClick={() => setStep(3)} className="button button-primary">Продолжить</button>
           <button onClick={() => setStep(1)} className="button button-primary-bordered">Назад</button>
         </form>
       </div>}
+
+      {step === 3 && <div className="card">
+        <h2>Давайте познакомимся</h2>
+        <form>
+          <input className="input" type="" placeholder="Имя"/>
+          <input className="input" type="" placeholder="Фамилия"/>
+          <button className="button button-primary">Продолжить</button>
+          <button onClick={() => setStep(2)} className="button button-primary-bordered">Назад</button>
+        </form>
+      </div>}
+
+
+
     </section>
   )
 }
