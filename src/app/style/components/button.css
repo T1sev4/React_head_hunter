@@ -21,3 +21,11 @@
 .button-primary-bordered:hover{
   opacity: 0.8;
 }
+.button_secondary_bordered{
+  border: 1px solid #bcbebf;
+  color: #303233;
+  background-color: #fafafa;
+}
+.button_secondary_bordered:hover{
+  opacity: 0.8;
+}
