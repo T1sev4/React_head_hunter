@@ -22,9 +22,9 @@ export default function Header(){
             <button className="header_search">
             <FontAwesomeIcon icon={faMagnifyingGlass} />              Поиск
             </button>
-            <button className="header_button header_button_green">
+            <Link href="/create-resume" className="header_button header_button_green">
               Создать резюме
-            </button>
+            </Link>
             <Link href="/login" className="header_button">
               Войти
             </Link>

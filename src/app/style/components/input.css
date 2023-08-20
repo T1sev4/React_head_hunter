@@ -4,5 +4,8 @@
   padding: 0 20px;
   width: 100%;
   outline: none;
+  border: 1px solid #ddd;
+}
+.input:focus{
   border: 1px solid #1785E5;
 }
