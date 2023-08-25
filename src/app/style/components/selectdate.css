@@ -17,5 +17,15 @@
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
   width: 30%;
-
+}
+.salary{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.salary input{
+  width: 40%;
+}
+.salary select{
+  width: 35%;
 }
