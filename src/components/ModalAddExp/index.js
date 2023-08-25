@@ -1,5 +1,5 @@
 
-export default function ModalAddExp({}){
+export default function ModalAddExp({close}){
 
   const onChangeMonth = () => {
 
@@ -16,7 +16,7 @@ export default function ModalAddExp({}){
 
   return(
    <div className="modal">
-    <div className="modal-backdrop"></div>
+    <div className="modal-backdrop" onClick={close}></div>
       <div className="modal-inner">
         <h2>Опыт работы</h2>
 
@@ -70,7 +70,7 @@ export default function ModalAddExp({}){
           <textarea placeholder="Опишите что вы делали на работе" className="textarea"></textarea>
 
           <div className="modal-actions">
-            <button className="button button-primary-bordered">Отменить</button>
+            <button className="button button-primary-bordered" onClick={close}>Отменить</button>
             <button className="button button-primary">Сохранить</button>
           </div>
       </div>

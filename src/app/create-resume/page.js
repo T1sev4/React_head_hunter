@@ -11,6 +11,9 @@ export default function CreateResume() {
 
   const [cities, setCities] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [modalExpIsOpen, setModalExpIsOpen] = useState(false);
+
+
 
   useEffect(() => {
    
@@ -26,6 +29,10 @@ export default function CreateResume() {
     console.log("onSelect", data)
   }
 
+
+  const closeModalExp = () => {
+    setModalExpIsOpen(false)
+  }
 
   return (
     <main>
@@ -81,7 +88,7 @@ export default function CreateResume() {
 
         <h3>Опыт работы</h3>
 
-        <ModalAddExp />
+        {modalExpIsOpen && <ModalAddExp close={closeModalExp} />}
 
         <fieldset className="fieldset fieldset-lg">
           <label>Места работы</label>
@@ -89,7 +96,7 @@ export default function CreateResume() {
             <div>
 
             </div>
-            <button className='button button-primary-bordered'>Добавить место работы</button>
+            <button className='button button-primary-bordered' onClick={() => setModalExpIsOpen(true)}>Добавить место работы</button>
           </div>
         </fieldset>
 
