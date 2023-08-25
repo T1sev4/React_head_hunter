@@ -6,6 +6,7 @@ import { END_POINT } from '@/config/end-point'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import SelectDate from '@/components/SelectDate'
+import ModalAddExp from '@/components/ModalAddExp'
 export default function CreateResume() {
 
   const [cities, setCities] = useState([]);
@@ -47,12 +48,12 @@ export default function CreateResume() {
           <label>Пол</label>
           <div className='radio-group'>
             <div className='radio'>
-            <input  type="radio" name='gender' id='g1' />
-            <label for="g1" >Мужской</label>
+              <input  type="radio" name='gender' id='g1' />
+              <label for="g1" >Мужской</label>
             </div>
             <div className='radio'>
-            <input type="radio" name='gender' id='g2' />
-            <label for="g2">Женский</label>
+              <input type="radio" name='gender' id='g2' />
+              <label for="g2">Женский</label>
             </div>
            
             
@@ -77,6 +78,21 @@ export default function CreateResume() {
             на руки
           </div>
         </fieldset>
+
+        <h3>Опыт работы</h3>
+
+        <ModalAddExp />
+
+        <fieldset className="fieldset fieldset-lg">
+          <label>Места работы</label>
+          <div className='exp'>
+            <div>
+
+            </div>
+            <button className='button button-primary-bordered'>Добавить место работы</button>
+          </div>
+        </fieldset>
+
       </div>
     </main>
   )

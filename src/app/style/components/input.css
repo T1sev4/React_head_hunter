@@ -21,3 +21,13 @@
   display: inline-block;
   margin-left: auto;
 }
+.textarea{
+  height: 200px;
+  border-radius: 4px;
+  padding: 0 20px;
+  width: 100%;
+  outline: none;
+  border: 1px solid #ddd;
+  resize: none;
+  padding-top: 10px;
+}
