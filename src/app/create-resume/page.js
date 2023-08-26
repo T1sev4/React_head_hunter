@@ -7,12 +7,13 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import SelectDate from '@/components/SelectDate'
 import ModalAddExp from '@/components/ModalAddExp'
+import WorkingHistory from '@/components/WorkingHistory'
 export default function CreateResume() {
 
   const [cities, setCities] = useState([]);
   const [countries, setCountries] = useState([]);
   const [modalExpIsOpen, setModalExpIsOpen] = useState(false);
-
+  const [workingHistories, setWorkingHistories] = useState([]);
 
 
   useEffect(() => {
@@ -34,6 +35,16 @@ export default function CreateResume() {
     setModalExpIsOpen(false)
   }
 
+  const addWorkingHistory = (item) => {
+    setWorkingHistories([...workingHistories , item])
+    closeModalExp()
+  } 
+  const removeWorkingHistory = (workingHistory) => {
+    let wh = [...workingHistories]
+    let index = workingHistories.indexOf(workingHistory)
+    wh.splice(index, 1)
+    setWorkingHistories(wh)
+  }
   return (
     <main>
       <Header />
@@ -88,14 +99,12 @@ export default function CreateResume() {
 
         <h3>Опыт работы</h3>
 
-        {modalExpIsOpen && <ModalAddExp close={closeModalExp} />}
+        {modalExpIsOpen && <ModalAddExp close={closeModalExp} addWorkingHistory={addWorkingHistory} />}
 
         <fieldset className="fieldset fieldset-lg">
           <label>Места работы</label>
           <div className='exp'>
-            <div>
-
-            </div>
+            {workingHistories.map(item => (<WorkingHistory workingHistory={item} remove={removeWorkingHistory} />))}
             <button className='button button-primary-bordered' onClick={() => setModalExpIsOpen(true)}>Добавить место работы</button>
           </div>
         </fieldset>

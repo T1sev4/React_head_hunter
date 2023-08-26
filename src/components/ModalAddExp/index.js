@@ -2,7 +2,7 @@
 import { useState } from "react"
 
 
-export default function ModalAddExp({close}){
+export default function ModalAddExp({close, addWorkingHistory}){
 
 
   const [start_date, setStart_date] = useState(Date.now()) 
@@ -12,6 +12,7 @@ export default function ModalAddExp({close}){
   const [responsibilities, setResponsibilities] = useState('')
 
   const onChangeMonth = (e) => {
+    console.log(e.target.value)
     let date = new Date(start_date);
     date.setMonth(e.target.value)
     setStart_date(date.getTime());
@@ -50,8 +51,7 @@ export default function ModalAddExp({close}){
       company_name,
       company_description
     }
-    console.log('work')
-    console.log(workingHistory);
+    addWorkingHistory(workingHistory)
   }
 
   return(
@@ -65,7 +65,7 @@ export default function ModalAddExp({close}){
           
           <div className="selectdate selectdate-noday">
             <select onChange={onChangeMonth} placeholder="Месяц" className="input">
-              <option disabled>Выберите месяц</option>
+              <option>Выберите месяц</option>
               <option value={0}>январь</option>
               <option value={1}>февраль</option>
               <option value={2}>март</option>
@@ -86,7 +86,7 @@ export default function ModalAddExp({close}){
 
           <div className="selectdate selectdate-noday">
             <select onChange={onChangeMonthEnd} placeholder="Месяц" className="input">
-              <option disabled>Выберите месяц</option>
+              <option>Выберите месяц</option>
               <option value={0}>январь</option>
               <option value={1}>февраль</option>
               <option value={2}>март</option>
