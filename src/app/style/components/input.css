@@ -21,6 +21,14 @@
   display: inline-block;
   margin-left: auto;
 }
+.tag i{
+  cursor: pointer;
+}
+.tags{
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
 .textarea{
   height: 200px;
   border-radius: 4px;

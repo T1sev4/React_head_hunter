@@ -8,13 +8,16 @@ import { useEffect, useState } from 'react'
 import SelectDate from '@/components/SelectDate'
 import ModalAddExp from '@/components/ModalAddExp'
 import WorkingHistory from '@/components/WorkingHistory'
+import AutoCompleteTags from '@/components/AutoCompleteTags'
+
+
 export default function CreateResume() {
 
   const [cities, setCities] = useState([]);
   const [countries, setCountries] = useState([]);
   const [modalExpIsOpen, setModalExpIsOpen] = useState(false);
   const [workingHistories, setWorkingHistories] = useState([]);
-
+  const [skills, setSkills] = useState([])
 
   useEffect(() => {
    
@@ -23,6 +26,9 @@ export default function CreateResume() {
     })
     axios.get(`${END_POINT}/api/region/countries`).then(res => {
       setCountries(res.data)
+    })
+    axios.get(`${END_POINT}/api/skills`).then(res => {
+      setSkills(res.data)
     })
   }, [])
 
@@ -109,6 +115,12 @@ export default function CreateResume() {
           </div>
         </fieldset>
 
+        <fieldset className="fieldset fieldset-lg">
+          <label>О себе</label>
+          <textarea className="textarea" placeholder="расскажите о себе" ></textarea>
+        </fieldset>
+
+        <AutoCompleteTags placeholder="" type="text" label="Ключевые навыки" size="fieldset-md" items={skills} onSelect={onSelect}/>
       </div>
     </main>
   )
