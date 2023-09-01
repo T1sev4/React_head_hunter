@@ -10,7 +10,7 @@ import ModalAddExp from '@/components/ModalAddExp'
 import WorkingHistory from '@/components/WorkingHistory'
 import AutoCompleteTags from '@/components/AutoCompleteTags'
 import AddEducation from '@/components/AddEducation'
-
+import AddLang from '@/components/AddLang'
 export default function CreateResume() {
 
   const [cities, setCities] = useState([]);
@@ -126,6 +126,9 @@ export default function CreateResume() {
 
         <AddEducation onChange={() => {}} />
 
+        <h3>Владение языками</h3>
+
+        <AddLang onChange={() => {}} />
       </div>
     </main>
   )
