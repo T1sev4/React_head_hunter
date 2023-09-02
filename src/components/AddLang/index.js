@@ -20,7 +20,7 @@ export default function AddLang({onChange}){
   }
   
   const lns = foreignLanguages.map((ln, index) => (
-    <div className="lns fieldset-md selectdate selectdate-noday" key={index}>
+    <div key={index} className="lns fieldset-md selectdate selectdate-noday" key={index}>
       <span className="remove" onClick={() => remove(index)}>X</span>
       <select placeholder="Язык" className="input" name={index + "-name" } value={foreignLanguages[index].name} onChange={onSelect}>
         <option value="Казахский">Казахский</option>
