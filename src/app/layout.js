@@ -1,4 +1,6 @@
 import './globals.css'
+import store from './store'
+import { Provider } from 'react-redux'
 
 export const metadata = {
   title: 'Работа в Казахстане, поиск персонала и публикация вакансий - hh.kz',
@@ -8,7 +10,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Provider store={store}>
+          {children}
+        </Provider>
+      </body>
     </html>
   )
 }
