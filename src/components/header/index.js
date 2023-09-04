@@ -4,8 +4,12 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 // import logo from '../../app/images/hh_logo.svg'
 // import Image from 'next/image';
+import { useSelector, useDispatch } from 'react-redux';
+import { logOut } from '@/app/store/slices/authSlice';
+export default function Header(){ 
 
-export default function Header(){
+  const isAuth = useSelector((state) => state.auth.isAuth)
+  const dispatch = useDispatch()
   return(
     <header className="header">
       <div className="container">
@@ -25,9 +29,14 @@ export default function Header(){
             <Link href="/create-resume" className="header_button header_button_green">
               Создать резюме
             </Link>
-            <Link href="/login" className="header_button">
+
+            {!isAuth && <Link href="/login" className="header_button">
               Войти
-            </Link>
+            </Link>}
+
+            {isAuth && <a className="header_button" onClick={() => dispatch(logOut())}>
+              Выйти
+            </a>}
           </div>
         </div>
       </div>
