@@ -1,14 +1,19 @@
 'use client'
 import { useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import { authorize } from "@/app/store/slices/authSlice";
+import { authorize, sendVerificationEmail } from "@/app/store/slices/authSlice";
 
 
 export default function UserLogin(){
   const isAuth = useSelector((state) => state.auth.isAuth)
+  const [email, setEmail] = useState('');
   const [step, setStep] = useState(1);
   const dispatch = useDispatch()
 
+  const sendVerifyEmail = () => {
+    dispatch(sendVerificationEmail(email))
+    setStep(2);
+  }
 
   return (
     <section className="login_page">
@@ -16,8 +21,13 @@ export default function UserLogin(){
       {step === 1 && <div className="card">
         <h2>Поиск работы</h2>
         <form>
-          <input className="input" type="" placeholder="Электронная почта или телефон"/>
-          <button onClick={() => setStep(2)} className="button button-primary">Продолжить</button>
+          <input 
+            className="input" 
+            type="" 
+            placeholder="Электронная почта или телефон" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)}/>
+          <button onClick={sendVerifyEmail} className="button button-primary">Продолжить</button>
         </form>
       </div>}
 
