@@ -1,19 +1,50 @@
 'use client'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import { authorize, sendVerificationEmail } from "@/app/store/slices/authSlice";
+import { useRouter } from 'next/navigation'
+import { authorize, sendVerificationEmail, verifyCode } from "@/app/store/slices/authSlice";
 
 
 export default function UserLogin(){
-  const isAuth = useSelector((state) => state.auth.isAuth)
   const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
   const [step, setStep] = useState(1);
+  const [time, setTime] = useState(119)
+
+
+  const isAuth = useSelector((state) => state.auth.isAuth)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const sendVerifyEmail = () => {
     dispatch(sendVerificationEmail(email))
     setStep(2);
   }
+
+  const verifyCodeFunc = () => {
+    dispatch(verifyCode(email, code))
+
+  }
+
+  useEffect(() => {
+    let interval
+    if(step === 2){
+      interval = setInterval(() => {
+        if(time !== 0){
+          setTime(time => time - 1)
+        }
+      }, 1000)
+    }else if(interval){
+      clearInterval(interval)
+    }
+  }, [step])
+
+  useEffect(() => {
+    if(isAuth) router.push('/resumes')
+  }, [isAuth])
+
+  const min = parseInt(time / 60)
+  const sec = time % 60  
 
   return (
     <section className="login_page">
@@ -41,24 +72,12 @@ export default function UserLogin(){
         <h2>Отправили код на ...</h2>
         <p>Напишите его чтобы подтвердить что это вы, а не кто-то другой</p>
         <form>
-          <input className="input" type="" placeholder="Введите код"/>
-          <p>Повторить можно через 00:48 </p>
-          <button onClick={() => setStep(3)} className="button button-primary">Продолжить</button>
+          <input className="input" type="" placeholder="Введите код" value={code} onChange={(e) => setCode(e.target.value)}/>
+          <p>Повторить можно через {min}:{sec} </p>
+          <button className="button button-primary" type="button" onClick={verifyCodeFunc}>Продолжить</button>
           <button onClick={() => setStep(1)} className="button button-primary-bordered">Назад</button>
         </form>
       </div>}
-
-      {step === 3 && <div className="card">
-        <h2>Давайте познакомимся</h2>
-        <form>
-          <input className="input" type="" placeholder="Имя"/>
-          <input className="input" type="" placeholder="Фамилия"/>
-          <button className="button button-primary" type="button" onClick={() => dispatch(authorize())}>Продолжить</button>
-          <button onClick={() => setStep(2)} className="button button-primary-bordered">Назад</button>
-        </form>
-      </div>}
-
-
 
     </section>
   )
