@@ -29,7 +29,7 @@ export default function CreateResume() {
     axios.get(`${END_POINT}/api/region/countries`).then(res => {
       setCountries(res.data)
     })
-    axios.get(`${END_POINT}/api/skills`).then(res => {
+    axios.get(`${END_POINT}/api/skills/getAllSkills`).then(res => {
       setSkills(res.data)
     })
     axios.get(`${END_POINT}/api/employment-types`).then(res => {

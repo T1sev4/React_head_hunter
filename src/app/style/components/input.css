@@ -13,19 +13,21 @@
   position: relative;
   display: flex;
   flex-direction: column;
+
 }
 .tag{
   padding: 5px;
   border-radius: 4px;
   background-color: #eceff0;
   display: inline-block;
-  margin-left: auto;
+  /* margin-left: auto; */
 }
 .tag i{
   cursor: pointer;
 }
 .tags{
   display: flex;
+  justify-content: flex-end;
   gap: 5px;
   flex-wrap: wrap;
 }
