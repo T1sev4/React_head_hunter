@@ -12,7 +12,14 @@ import AutoCompleteTags from '@/components/AutoCompleteTags'
 import AddEducation from '@/components/AddEducation'
 import AddLang from '@/components/AddLang'
 import SelectEmploymentTypes from '@/components/SelectEmploymentTypes'
+import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
+import { createResume } from '@/app/store/slices/resumeSlice'
+
 export default function CreateResume() {
+  const router = useRouter()
+  const dispatch = useDispatch()
+
 
   const [cities, setCities] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -77,8 +84,8 @@ export default function CreateResume() {
     setSelectedSkills(arr.join(','))
   }
 
-  const handleSave =() => {
-    console.log({
+  const handleSave = () => {
+    dispatch(createResume({
       first_name,
       last_name,
       phone,
@@ -94,8 +101,10 @@ export default function CreateResume() {
       education,
       foreignLanguages,
       employmentTypes,
-      about
-    })
+      about,
+      main_language: 'казахский'
+    }, router))
+    
   }
 
   return (
