@@ -7,7 +7,8 @@ export const resumeSlice = createSlice({
   name: 'resume',
   // данные по умолчанию
   initialState: {
-    resumes: []
+    resumes: [],
+    resume: {}
   },
   reducers: {
     setMyResumes: (state, action) => {
@@ -16,18 +17,29 @@ export const resumeSlice = createSlice({
     appendResume: (state, action) => {
       state.resumes = [...state.resumes, action.payload.newresume]
     },
+    setResume: (state, action) => {
+      state.resume = action.payload.resume
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setMyResumes, appendResume } = resumeSlice.actions
+export const { setMyResumes, appendResume, setResume } = resumeSlice.actions
 
 
 export const getMyResumes = () => async (dispatch) => {
   try {
     const res = await axios.get(`${END_POINT}/api/resume`)
-    console.log(res.data)
     dispatch(setMyResumes({resumes: res.data}))
+  } catch (error) {
+    alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
+  }
+}
+
+export const getResumeById = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${END_POINT}/api/resume/${id}`)
+    dispatch(setResume({resume: res.data}))
   } catch (error) {
     alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
   }
