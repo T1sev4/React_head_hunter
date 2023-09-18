@@ -13,3 +13,7 @@ h4, .h4{
   font-size: 12px;
   font-weight: 700;
 }
+.link{
+  color: #589beb;
+  cursor: pointer;
+}

@@ -110,7 +110,7 @@ export default function ModalAddExp({close, addWorkingHistory}){
           <input className="input" placeholder="Должность" type="text" onChange={onChangeCompanyDesc} value={company_description} />
           
           <h4>Обязанности на рабочем месте</h4>
-          <textarea placeholder="Опишите что вы делали на работе" className="textarea" onChange={onChangeResp}>{responsibilities}</textarea>
+          <textarea placeholder="Опишите что вы делали на работе" className="textarea" onChange={onChangeResp} value={responsibilities}></textarea>
 
           <div className="modal-actions">
             <button className="button button-primary-bordered" onClick={close}>Отменить</button>

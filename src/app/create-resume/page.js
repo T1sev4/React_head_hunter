@@ -164,7 +164,7 @@ export default function CreateResume() {
         <fieldset className="fieldset fieldset-lg">
           <label>Места работы</label>
           <div className='exp'>
-            {workingHistories.map(item => (<WorkingHistory workingHistory={item} remove={removeWorkingHistory} />))}
+            {workingHistories.map((item, index) => (<WorkingHistory key={index} workingHistory={item} remove={removeWorkingHistory} />))}
             <button className='button button-primary-bordered' onClick={() => setModalExpIsOpen(true)}>Добавить место работы</button>
           </div>
         </fieldset>
