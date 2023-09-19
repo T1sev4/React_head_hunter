@@ -1,9 +1,9 @@
 
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Input from "../input";
-export default function AutoCompleteSelect({label, placeholder, type, size, items, onSelect}){
+export default function AutoCompleteSelect({label, placeholder, type, size, items, onSelect, selected}){
   
   const [value, setValue] = useState({name: ""});
   const [filteredItems, setFilteredItems] = useState([])
@@ -12,6 +12,13 @@ export default function AutoCompleteSelect({label, placeholder, type, size, item
     setValue(item)
     setFilteredItems([])
   }
+
+  useEffect(() => {
+    items.map(item => {
+      if(item.id === selected) setValue(item)
+    })
+  }, [selected, items])
+
   const reset = () => {
     setValue({name: ""})
     onSelect(null)
@@ -30,9 +37,11 @@ export default function AutoCompleteSelect({label, placeholder, type, size, item
   return(
     <div className={"autocomplete " + size}>
       <Input placeholder={placeholder} type={type} onChange={onChange} label={label} size={size} />
-      {value.name !== "" && <div className="tag">
-        <span>{value.name} </span> <i onClick={reset}>X</i>
-      </div>}
+      <div className="tags">
+        {value.name !== "" && <div className="tag">
+          <span>{value.name} </span> <i onClick={reset}>X</i>
+        </div>}
+      </div>
       {items.length != 0 && <div className="dropdown">
         {filteredItems.map(item => (<a key={item.id} onClick={() => onClick(item)}>{item.name}</a>))}
       </div>}

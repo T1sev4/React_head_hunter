@@ -1,20 +1,20 @@
 'use client'
 import { useState, useEffect } from "react"
 
-export default function AddLang({onChange}){
-  const [foreignLanguages, setForeignLanguages] = useState([])
+export default function AddLang({onChange, foreignLanguages}){
+ 
   
   const remove = (index) => {
     const langs = [...foreignLanguages];
     langs.splice(index, 1);
-    setForeignLanguages(langs)
+    onChange(langs)
   }
 
   const onSelect = (e) => {
     const [index, key] = e.target.name.split("-")
     const langs = [...foreignLanguages];
     langs[index][key] = e.target.value;
-    setForeignLanguages(langs)
+    onChange(langs)
 
     onChange(langs)
   }
@@ -42,7 +42,7 @@ export default function AddLang({onChange}){
   return(
     <div className="eds">
       {lns}
-      <a onClick={() => setForeignLanguages([...foreignLanguages, {name: "", level: ""}])}>Добавить язык</a>
+      <a onClick={() => onChange([...foreignLanguages, {name: "", level: ""}])}>Добавить язык</a>
     </div>
   )
 }

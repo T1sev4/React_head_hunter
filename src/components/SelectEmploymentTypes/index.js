@@ -1,28 +1,33 @@
 import { useEffect, useState } from "react"
 
-export default function SelectEmploymentTypes({employmentTypes, label, size, onChange}){
-  const [eTypes, setETypes] = useState([])
+export default function SelectEmploymentTypes({allEmploymentTypes, label, size, onChange, employmentTypes}){
+  // const [eTypes, setETypes] = useState([])
+
+  // useEffect(() => {
+  //   setETypes(employmentTypes)
+  // }, [employmentTypes])
 
   const onSelect = (e) => {
-    const tps = [...eTypes]
+    const tps = [...employmentTypes]
     if(e.target.checked && !tps.includes(e.target.value * 1)){
-      setETypes([...eTypes, e.target.value * 1])
+      onChange([...tps, e.target.value * 1])
     }else if(!e.target.checked && tps.includes(e.target.value * 1)){
       const index = tps.indexOf(e.target.value * 1)
       tps.splice(index, 1)
-      setETypes(tps)
+      onChange(tps)
     }
-    
   } 
-  useEffect(() => {
-    onChange(eTypes)
-  }, [eTypes])
+  // useEffect(() => {
+  //   onChange(eTypes)
+  // }, [eTypes])
+
   return(
     <fieldset className={"fieldset " + size}>
       <label>{label}</label>
       <div>
-        {employmentTypes.map((type, index) => <div className="checkbox" key={index}>
-          <input type="checkbox" name="employmentTypes" value={type.id} id={type.id + "-type"} onChange={onSelect}/>
+        {allEmploymentTypes.map((type, index) => <div className="checkbox" key={index}>
+          {employmentTypes && employmentTypes.includes(type.id) && <input type="checkbox" name="employmentTypes" value={type.id} id={type.id + "-type"} onChange={onSelect} checked/>}
+          {employmentTypes && !employmentTypes.includes(type.id) && <input type="checkbox" name="employmentTypes" value={type.id} id={type.id + "-type"} onChange={onSelect}/>}
           <label htmlFor={type.id + "-type"}>{type.name}</label>
         </div>)}
       </div>
