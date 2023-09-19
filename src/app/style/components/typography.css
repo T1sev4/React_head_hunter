@@ -1,3 +1,6 @@
+h1, h2, h3, h4, h5, h6{
+  margin: 10px 0;
+}
 h1{
   font-size: 24px;
 }
@@ -16,4 +19,7 @@ h4, .h4{
 .link{
   color: #589beb;
   cursor: pointer;
+}
+p{
+  margin: 5px 0;
 }
