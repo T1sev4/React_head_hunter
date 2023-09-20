@@ -5,3 +5,9 @@
 .working-history-info h4{
   font-size: 14px;
 }
+.deleteResume{
+  position: absolute;
+  right: 20px;
+  top: 30px;
+  cursor: pointer;
+}
