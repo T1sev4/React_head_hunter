@@ -23,3 +23,7 @@ h4, .h4{
 p{
   margin: 5px 0;
 }
+.error{
+  padding: 5px 0;
+  color: #ff0000;
+}

@@ -1,9 +1,15 @@
 'use client'
 import Header from '@/components/header'
 import UserLogin from '@/components/auth/user'
-import { useState } from 'react'
-
+import { useEffect, useState } from 'react'
+import { signUp } from '@/app/store/slices/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setError } from '@/app/store/slices/authSlice'
+import { useRouter } from 'next/navigation'
 export default function EmployerSignup() {
+  const dispatch = useDispatch()
+  const error = useSelector((state) => state.auth.error)
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [step, setStep] = useState(1)
   const [first_name, setFirst_name] = useState('')
@@ -12,12 +18,31 @@ export default function EmployerSignup() {
   const [company_description, setCompanyDesc] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
-
   const [company_address, setCompanyAdr] = useState('')
   const [company_logo, setCompanyLogo] = useState()
   
+
+  useEffect(() => {
+    return () => {
+      dispatch(setError(null))
+    }
+  })
+
   const onLogoChange = (e) => {
     setCompanyLogo(e.target.files[0])
+  }
+
+  const handleSignup = () => {
+    dispatch(signUp({
+      email,
+      full_name: `${first_name} ${last_name}`,
+      company_name,
+      company_description,
+      company_address,
+      company_logo,
+      password,
+      password2
+    }, router))
   }
   
   return (
@@ -42,6 +67,7 @@ export default function EmployerSignup() {
               onChange={(e) => setEmail(e.target.value)}/>
             <button className="button button-primary" onClick={() => setStep(2)}>Продолжить</button>
           </form>
+          {error && Object.keys(error).map(key => (<p key={key} className='error'>{error[key]}</p>))}
         </div>}
 
         {step === 2 && <div className="card">
@@ -52,6 +78,7 @@ export default function EmployerSignup() {
             <button className="button button-primary" type="button" onClick={() => setStep(3)}>Продолжить</button>
             <button onClick={() => setStep(1)} className="button button-primary-bordered">Назад</button>
           </form>
+          {error && Object.keys(error).map(key => (<p key={key} className='error'>{error[key]}</p>))}
         </div>}
         
         {step === 3 && <div className="card">
@@ -65,17 +92,19 @@ export default function EmployerSignup() {
             <button className="button button-primary" type="button" onClick={() => setStep(4)}>Продолжить</button>
             <button onClick={() => setStep(2)} className="button button-primary-bordered">Назад</button>
           </form>
+          {error && Object.keys(error).map(key => (<p key={key} className='error'>{error[key]}</p>))}
         </div>}
        
         {step === 4 && <div className="card">
           <h2>Введите пароль</h2>
           <form>
-            <input className="input" type="" placeholder="Введите пароль" value={password} onChange={(e) => setPassword(e.target.value)}/>
-            <input className="input" type="" placeholder="Повторите пароль" value={password2} onChange={(e) => setPassword2(e.target.value)}/>
+            <input className="input" type="password" placeholder="Введите пароль" value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <input className="input" type="password" placeholder="Повторите пароль" value={password2} onChange={(e) => setPassword2(e.target.value)}/>
             
-            <button className="button button-primary" type="button" onClick={() => setStep(1)}>Продолжить</button>
+            <button className="button button-primary" type="button" onClick={handleSignup}>Зарегистрироваться</button>
             <button onClick={() => setStep(3)} className="button button-primary-bordered">Назад</button>
           </form>
+          {error && Object.keys(error).map(key => (<p key={key} className='error'>{error[key]}</p>))}
         </div>}
       </section>
       </div>
