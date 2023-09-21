@@ -9,6 +9,8 @@ import { logOut } from '@/app/store/slices/authSlice';
 export default function Header(){ 
 
   const isAuth = useSelector((state) => state.auth.isAuth)
+  const currentUser = useSelector((state) => state.auth.currentUser)
+  console.log(currentUser)
   const dispatch = useDispatch()
   return(
     <header className="header">
@@ -19,16 +21,24 @@ export default function Header(){
               <img src='/images/hh_logo.svg'/>
             </Link>
             {/* <Image src={logo} alt=""/> */}
-            <Link href="/resumes">Мои резюме</Link>
+
+            {currentUser && currentUser.role && currentUser.role.name === "manager" && <Link href="/vacancy">Мои вакансии</Link>}
+            {currentUser && currentUser.role && currentUser.role.name !== "manager" && <Link href="/resumes">Мои резюме</Link>}
             <a>Помощь</a>
           </div>
           <div className="header_right">
             <button className="header_search">
             <FontAwesomeIcon icon={faMagnifyingGlass} />              Поиск
             </button>
-            <Link href="/create-resume" className="header_button header_button_green">
+
+            {currentUser && currentUser.role && currentUser.role.name === "manager" &&   <Link href="/create-vacancy" className="header_button header_button_green">
+              Создать вакансию
+            </Link>}
+            {currentUser && currentUser.role && currentUser.role.name !== "manager" &&   <Link href="/create-resume" className="header_button header_button_green">
               Создать резюме
-            </Link>
+            </Link>}
+
+          
 
             {!isAuth && <Link href="/login" className="header_button">
               Войти

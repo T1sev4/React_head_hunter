@@ -26,7 +26,7 @@ export default function EmployerSignup() {
     return () => {
       dispatch(setError(null))
     }
-  })
+  }, [])
 
   const onLogoChange = (e) => {
     setCompanyLogo(e.target.files[0])

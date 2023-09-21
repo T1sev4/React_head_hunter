@@ -98,9 +98,19 @@ export const signUp = (data, router) => (dispatch) => {
   fd.append("company_logo", data.company_logo)
 
   axios.post(`${END_POINT}/api/auth/signup`, fd).then(res => {
-    router.push('employer/signin')
+    router.push('/employer/signin')
   }).catch(e => {
     dispatch(setError(e.response.data))
+  })
+}
+export const signIn = (data, router) => (dispatch) => {
+
+  axios.post(`${END_POINT}/api/auth/login`, data).then(res => {
+    dispatch(authorize(res.data))
+    router.push('/vacancy')
+  }).catch(e => {
+    console.log(e)
+    if(e.response && e.response.data) dispatch(setError(e.response.data))
   })
 }
 

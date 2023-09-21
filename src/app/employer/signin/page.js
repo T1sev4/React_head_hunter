@@ -4,23 +4,29 @@ import UserLogin from '@/components/auth/user'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setError } from '@/app/store/slices/authSlice'
+import { signIn } from '@/app/store/slices/authSlice'
+import { useRouter } from 'next/navigation'
 export default function EmployerSignin() {
+  const router = useRouter()
   const dispatch = useDispatch()
   const error = useSelector((state) => state.auth.error)
-
+  console.log(error)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  console.log('render')
   useEffect(() => {
     return () => {
       dispatch(setError(null))
     }
-  })
+  }, [])
 
   
 
   const handleSignin = () => {
-    
+    dispatch(signIn({
+      email,
+      password
+    }, router))
   }
   
   return (
@@ -48,7 +54,7 @@ export default function EmployerSignin() {
               placeholder="Введите пароль" 
               value={password} 
               onChange={(e) => setPassword(e.target.value)}/>
-            <button className="button button-primary" onClick={handleSignin}>Войти</button>
+            <button type='button' className="button button-primary" onClick={handleSignin}>Войти</button>
           </form>
           {error && Object.keys(error).map(key => (<p key={key} className='error'>{error[key]}</p>))}
         </div>
