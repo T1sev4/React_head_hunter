@@ -1,0 +1,18 @@
+.bg {
+  background-image: url('https://i.hh.kz/css/globals/light-page/blocks/page/back-form__min_.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+.auth-header{
+  padding-top: 20px;
+}
+.auth-header p,
+.auth-header a{
+  max-width: 300px;
+  color: #fff;
+}
+.login_page .card{
+  background-color: #fff;
+  padding-bottom: 40PX;
+}

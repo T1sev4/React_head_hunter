@@ -5,6 +5,7 @@ import { deleteResume } from "@/app/store/slices/resumeSlice";
 export default function MyResume({item}){
   const dispatch = useDispatch()
 
+
   return(
     <div className="card mtb4">
       <Link href={`/resumes/${item.id}`} className="h3 link">{item.position}</Link>
