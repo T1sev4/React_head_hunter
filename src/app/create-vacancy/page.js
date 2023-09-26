@@ -9,7 +9,7 @@ export default function CreateVacancy(){
   const dispatch = useDispatch();
 
   const [name, setName] = useState('')
-  const [specialization, setSpecialization] = useState()
+  const [specializationId, setSpecialization] = useState()
   const [isSpecModalOpen, setSpecModalOpen] = useState(false)
   const closeSpecModal = () => {
     setSpecModalOpen(false)
@@ -18,6 +18,11 @@ export default function CreateVacancy(){
   useEffect(() => {
     dispatch(getSpecializations())
   }, [])
+
+
+  const handleOnSpecChange = (e) => {
+    setSpecialization(e.target.value * 1)
+  }
 
   return (
     <main>
@@ -35,7 +40,7 @@ export default function CreateVacancy(){
           <p className="link" onClick={() => setSpecModalOpen(true)}>Указать специализацию</p>
         </fieldset>
 
-        {isSpecModalOpen && <ModalSelectSpec close={closeSpecModal} onChange={spec => setSpecialization(spec)} />}
+        {isSpecModalOpen && <ModalSelectSpec close={closeSpecModal} onChange={handleOnSpecChange} value={specializationId} />}
 
       </div>
     </main>
