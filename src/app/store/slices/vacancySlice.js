@@ -108,6 +108,16 @@ export const createVacancy = (sendData, router) => async (dispatch) => {
   }
 }
 
+export const deleteVacancy = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`${END_POINT}/api/vacancy/${id}`)
+    dispatch(handleDeleteVacancy(id));
+  } catch (error) {
+    console.log(error);
+    alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
+  }
+}
+
 // export const getResumeById = (id) => async (dispatch) => {
 //   try {
 //     const res = await axios.get(`${END_POINT}/api/resume/${id}`)
@@ -121,15 +131,6 @@ export const createVacancy = (sendData, router) => async (dispatch) => {
 //   try {
 //     const res = await axios.put(`${END_POINT}/api/resume`, sendData)
 //     router.push('/resumes');
-//   } catch (error) {
-//     console.log(error);
-//     alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
-//   }
-// }
-// export const deleteResume = (id) => async (dispatch) => {
-//   try {
-//     const res = await axios.delete(`${END_POINT}/api/resume/${id}`)
-//     dispatch(handleDeleteResume(id));
 //   } catch (error) {
 //     console.log(error);
 //     alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
