@@ -9,7 +9,6 @@ let initialState = {
   tokenExp: 0,
   error: null
 }
-console.log(token)
 if(token){
   let decodedToken = jwt_decode(token)
   if(decodedToken.exp * 1000 > Date.now()){
@@ -24,7 +23,6 @@ if(token){
       },
       tokenExp: decodedToken.exp
     }
-    console.log(initialState)
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }else{
     localStorage.removeItem("token");

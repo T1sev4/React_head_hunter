@@ -31,7 +31,6 @@ export default function AutoCompliteTags({label, placeholder, type, size, items,
 
 
     const onChange = (e) => {
-        console.log(e.target.value)
         if(e.target.value === "") {
             setFilteredItems([])
         }else {
@@ -80,15 +79,14 @@ export default function AutoCompliteTags({label, placeholder, type, size, items,
         onSelect(value)
         
     }, [value])
-    console.log(value, selected)
     return (
         <div className="fieldset-lg">
             <div className="tags">
-                {value.length > 0 && value.map(tag =><div className="tag">
+                {value.length > 0 && value.map((tag, index) =><div key={index} className="tag">
                     <span>{tag.name}</span> <i onClick={() => deleteTag(tag)}>X</i>
                 </div>)}
             </div>
-            <div className={"autocomplite " + size}>
+            <div className={"autocomplete " + size}>
                
             
                 <Input placeholder={placeholder} type={type} onChange={onChange} label={label} size={size}/> 

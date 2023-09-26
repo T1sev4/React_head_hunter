@@ -10,7 +10,6 @@ export default function Header(){
 
   const isAuth = useSelector((state) => state.auth.isAuth)
   const currentUser = useSelector((state) => state.auth.currentUser)
-  console.log(currentUser)
   const dispatch = useDispatch()
   return(
     <header className="header">

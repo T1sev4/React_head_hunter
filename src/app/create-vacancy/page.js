@@ -3,14 +3,20 @@
 import Header from "@/components/header"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getSpecializations, getCities, getExperiences } from "@/app/store/slices/vacancySlice"
+import { getSpecializations, getCities, getExperiences, getSkills, getEmploymentTypes } from "@/app/store/slices/vacancySlice"
 import ModalSelectSpec from "@/components/ModalSelectSpec"
 import AutoCompleteSelect from "@/components/AutoCompleteSelect"
+import AutoCompleteTags from "@/components/AutoCompleteTags"
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
 export default function CreateVacancy(){
   const dispatch = useDispatch();
   const cities = useSelector(state => state.vacancy.cities)
   const experiences = useSelector(state => state.vacancy.experiences)
-
+  const allSkills = useSelector(state => state.vacancy.skills)
+  const empTypes = useSelector(state => state.vacancy.employmentTypes)
   const [name, setName] = useState('')
   const [specializationId, setSpecialization] = useState()
   const [isSpecModalOpen, setSpecModalOpen] = useState(false)
@@ -20,7 +26,9 @@ export default function CreateVacancy(){
   const [salary_type, setSalaryType] = useState('KZT')
   const [address, setAddress] = useState('')
   const [experienceId, setExperience] = useState()
-
+  const [description, setDescription] = useState('<h2>Обязанности</h2> <ul><li></li><li></li></ul> <h2>Требования</h2> <ul><li></li><li></li></ul> <h2>Условия</h2> <ul><li></li><li></li></ul> ')
+  const [skills, setSelectedSkills] = useState([]);
+  const [employmentTypeId, setEmploymentType] = useState()
   const closeSpecModal = () => {
     setSpecModalOpen(false)
   }
@@ -29,6 +37,8 @@ export default function CreateVacancy(){
     dispatch(getSpecializations())
     dispatch(getCities())
     dispatch(getExperiences())
+    dispatch(getSkills())
+    dispatch(getEmploymentTypes())
   }, [])
 
 
@@ -37,6 +47,10 @@ export default function CreateVacancy(){
   }
   const handleChangeExp = (e) => {
     setExperience(e.target.value * 1)
+  }
+  const onSkillsChange = (data) => {
+    const arr = data.map(item => item.name)
+    setSelectedSkills(arr.join(','))
   }
 
   return (
@@ -90,6 +104,48 @@ export default function CreateVacancy(){
           </div>
         </fieldset>
 
+        <fieldset className="fieldset-vertical"> 
+          <label>Расскажите про вакансию</label>
+          <div>
+          <CKEditor
+            editor={ ClassicEditor }
+            data={description}
+            onReady={ editor => {
+                // You can store the "editor" and use when it is needed.
+                console.log( 'Editor is ready to use!', editor );
+            } }
+            config={ {
+              toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList', 'redo' ]
+          } }
+            onChange={ ( event, editor ) => {
+                const data = editor.getData();
+                setDescription(data)
+            } }
+            onBlur={ ( event, editor ) => {
+                console.log( 'Blur.', editor );
+            } }
+            onFocus={ ( event, editor ) => {
+                console.log( 'Focus.', editor );
+            } }
+          />
+            
+          </div>
+        </fieldset>
+        
+        <AutoCompleteTags placeholder="" type="text" label="Ключевые навыки" size="fieldset-md fieldset-vertical" items={allSkills} onSelect={onSkillsChange} selected={skills.length > 0 ? skills.split(',').map(item => ({name: item})) : [] }/>
+        
+        <fieldset className="fieldset-vertical"> 
+          <label>Опыт работы</label>
+          <div>
+            {empTypes.map(et => <div key={et.id} className="radio">
+              <input type="radio" value={et.id} onChange={(e) => setEmploymentType(e.target.value)} name="et" />
+              <label>{et.name}</label>
+            </div>)}
+            
+          </div>
+        </fieldset>
+        
+        <button className="button button-primary">Создать</button>
       </div>
     </main>
   )
