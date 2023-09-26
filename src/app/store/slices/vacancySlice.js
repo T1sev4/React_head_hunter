@@ -9,7 +9,9 @@ export const vacancySlice = createSlice({
   initialState: {
     vacancies: [],
     vacancy: {},
-    specializations: []
+    specializations: [],
+    cities: [],
+    experiences: []
   },
   reducers: {
     setMyVacancies: (state, action) => {
@@ -29,11 +31,17 @@ export const vacancySlice = createSlice({
     setSpecialization: (state, action) => {
       state.specializations = action.payload
     },
+    setCities: (state, action) => {
+      state.cities = action.payload
+    },
+    setExperiences: (state, action) => {
+      state.experiences = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setMyVacancies, appendVacancy, setVacancy, handleDeleteVacancy,  setSpecialization} = vacancySlice.actions
+export const { setMyVacancies, appendVacancy, setVacancy, handleDeleteVacancy,  setSpecialization, setCities, setExperiences} = vacancySlice.actions
 
 
 export const getMyVacancies = () => async (dispatch) => {
@@ -48,6 +56,22 @@ export const getSpecializations = () => async (dispatch) => {
   try {
     const res = await axios.get(`${END_POINT}/api/specializations`)
     dispatch(setSpecialization(res.data))
+  } catch (error) {
+    alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
+  }
+}
+export const getCities = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${END_POINT}/api/region/cities`)
+    dispatch(setCities(res.data))
+  } catch (error) {
+    alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
+  }
+}
+export const getExperiences = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${END_POINT}/api/experiences`)
+    dispatch(setExperiences(res.data))
   } catch (error) {
     alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
   }
