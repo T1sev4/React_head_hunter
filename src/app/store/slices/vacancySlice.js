@@ -19,9 +19,6 @@ export const vacancySlice = createSlice({
     setMyVacancies: (state, action) => {
       state.vacancies = action.payload.vacancies
     },
-    appendVacancy: (state, action) => {
-      state.vacancies = [...state.vacancies, action.payload.newresume]
-    },
     setVacancy: (state, action) => {
       state.resume = action.payload.resume
     },
@@ -49,7 +46,7 @@ export const vacancySlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setMyVacancies, appendVacancy, setVacancy, handleDeleteVacancy,  setSpecialization, setCities, setExperiences, setSkills, setEmploymentTypes} = vacancySlice.actions
+export const { setMyVacancies, setVacancy, handleDeleteVacancy,  setSpecialization, setCities, setExperiences, setSkills, setEmploymentTypes} = vacancySlice.actions
 
 
 export const getMyVacancies = () => async (dispatch) => {
@@ -101,6 +98,16 @@ export const getEmploymentTypes = () => async (dispatch) => {
   }
 }
 
+export const createVacancy = (sendData, router) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${END_POINT}/api/vacancy`, sendData)
+    router.push('/vacancy');
+  } catch (error) {
+    console.log(error);
+    alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
+  }
+}
+
 // export const getResumeById = (id) => async (dispatch) => {
 //   try {
 //     const res = await axios.get(`${END_POINT}/api/resume/${id}`)
@@ -110,16 +117,6 @@ export const getEmploymentTypes = () => async (dispatch) => {
 //   }
 // }
 
-// export const createResume = (sendData, router) => async (dispatch) => {
-//   try {
-//     const res = await axios.post(`${END_POINT}/api/resume`, sendData)
-//     router.push('/resumes');
-//     dispatch(appendResume({newresume: res.data}))
-//   } catch (error) {
-//     console.log(error);
-//     alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
-//   }
-// }
 // export const editResume = (sendData, router) => async (dispatch) => {
 //   try {
 //     const res = await axios.put(`${END_POINT}/api/resume`, sendData)

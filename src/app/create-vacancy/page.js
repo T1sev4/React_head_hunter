@@ -3,22 +3,26 @@
 import Header from "@/components/header"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getSpecializations, getCities, getExperiences, getSkills, getEmploymentTypes } from "@/app/store/slices/vacancySlice"
+import { getSpecializations, getCities, getExperiences, getSkills, getEmploymentTypes, createVacancy } from "@/app/store/slices/vacancySlice"
 import ModalSelectSpec from "@/components/ModalSelectSpec"
 import AutoCompleteSelect from "@/components/AutoCompleteSelect"
 import AutoCompleteTags from "@/components/AutoCompleteTags"
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useRouter } from "next/navigation"
 
 
 export default function CreateVacancy(){
+  const router = useRouter()
   const dispatch = useDispatch();
   const cities = useSelector(state => state.vacancy.cities)
   const experiences = useSelector(state => state.vacancy.experiences)
   const allSkills = useSelector(state => state.vacancy.skills)
   const empTypes = useSelector(state => state.vacancy.employmentTypes)
+
   const [name, setName] = useState('')
   const [specializationId, setSpecialization] = useState()
+  const [specializationName, setSpecializationName] = useState()
   const [isSpecModalOpen, setSpecModalOpen] = useState(false)
   const [cityId, setCity] = useState()
   const [salary_from, setSalaryFrom] = useState('')
@@ -43,7 +47,9 @@ export default function CreateVacancy(){
 
 
   const handleOnSpecChange = (e) => {
-    setSpecialization(e.target.value * 1)
+    setSpecialization(e.target.value)
+    setSpecializationName(e.target.dataset.name)
+    closeSpecModal()
   }
   const handleChangeExp = (e) => {
     setExperience(e.target.value * 1)
@@ -51,6 +57,24 @@ export default function CreateVacancy(){
   const onSkillsChange = (data) => {
     const arr = data.map(item => item.name)
     setSelectedSkills(arr.join(','))
+  }
+
+  const handleSave = () => {
+    dispatch(createVacancy({
+      name,
+      specializationId,
+      cityId, 
+      description,
+      employmentTypeId,
+      salary_from,
+      salary_to,
+      salary_type,
+      address,
+      skills,
+      experienceId,
+      about_company: ''
+
+    }, router))
   }
 
   return (
@@ -68,12 +92,13 @@ export default function CreateVacancy(){
 
         <fieldset className="fieldset-vertical">
           <label>Указать специализацию</label>
+         {specializationName && <p>{specializationName}</p>}
           <p className="link" onClick={() => setSpecModalOpen(true)}>Указать специализацию</p>
         </fieldset>
 
-        {isSpecModalOpen && <ModalSelectSpec close={closeSpecModal} onChange={handleOnSpecChange} value={specializationId} />}
+        {isSpecModalOpen && <ModalSelectSpec close={closeSpecModal} onChange={handleOnSpecChange} value={specializationId * 1} />}
 
-        <AutoCompleteSelect placeholder="" type="text" label="Город проживание" size="fieldset-md fieldset-vertical" items={cities} onSelect={(data) => setCity(data.id)}/>
+        <AutoCompleteSelect placeholder="" type="text" label="Город проживание" size="fieldset-md fieldset-vertical" items={cities} onSelect={(data) => setCity(`${data.id}`)}/>
 
           <fieldset className="fieldset-vertical"> 
             <label>Предполагаемый уровень дохода в месяц</label>
@@ -145,7 +170,7 @@ export default function CreateVacancy(){
           </div>
         </fieldset>
         
-        <button className="button button-primary">Создать</button>
+        <button className="button button-primary" onClick={handleSave}>Создать</button>
       </div>
     </main>
   )
