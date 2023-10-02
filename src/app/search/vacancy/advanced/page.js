@@ -14,7 +14,8 @@ export default function SearchVacancyAdvanced(){
   const dispatch = useDispatch();
   const cities = useSelector(state => state.vacancy.cities)
   const experiences = useSelector(state => state.vacancy.experiences)
-  console.log(experiences)
+  const empTypes = useSelector(state => state.vacancy.employmentTypes)
+
   const [q, setQ] = useState('')
   const [specializationId, setSpecialization] = useState()
   const [specializationName, setSpecializationName] = useState()
@@ -23,7 +24,7 @@ export default function SearchVacancyAdvanced(){
   const [salary, setSalary] = useState('')
   const [salary_type, setSalaryType] = useState('KZT')
   const [experienceId, setExperience] = useState()
-  
+  const [employmentTypeId, setEmploymentType] = useState()
   const closeSpecModal = () => {
     setSpecModalOpen(false)
   }
@@ -48,21 +49,17 @@ export default function SearchVacancyAdvanced(){
 
 
   const handleSearch = () => {
-    dispatch(createVacancy({
-      name,
-      specializationId,
-      cityId, 
-      description,
-      employmentTypeId,
-      salary_from,
-      salary_to,
-      salary_type,
-      address,
-      skills,
-      experienceId,
-      about_company: ''
+    let queryString = "?"
 
-    }, router))
+    if(q) queryString += `q=${q}&`
+    if(specializationId) queryString += `specializationId=${specializationId}&`
+    if(cityId) queryString += `cityId=${cityId}&`
+    if(salary) queryString += `salary=${salary}&`
+    if(salary_type) queryString += `salary_type=${salary_type}&`
+    if(experienceId) queryString += `experienceId=${experienceId}&`
+    if(employmentTypeId) queryString += `employmentTypeId=${employmentTypeId}&`
+
+    router.push(`/search/vacancy${queryString}`)
   }
 
   return (
@@ -110,6 +107,16 @@ export default function SearchVacancyAdvanced(){
           </div>
         </fieldset>
 
+        <fieldset className="fieldset-vertical"> 
+          <label>Тип занятости</label>
+          <div>
+            {empTypes.map(et => <div key={et.id} className="radio">
+              <input type="radio" value={et.id} onChange={(e) => setEmploymentType(e.target.value)} name="et" />
+              <label>{et.name}</label>
+            </div>)}
+            
+          </div>
+        </fieldset>
         
         <button className="button button-primary" onClick={handleSearch}>Поиск</button>
       </div>
