@@ -20,7 +20,7 @@ export const vacancySlice = createSlice({
       state.vacancies = action.payload.vacancies
     },
     setVacancy: (state, action) => {
-      state.resume = action.payload.resume
+      state.vacancy = action.payload.vacancy
     },
     handleDeleteVacancy: (state, action) => {
       let vacancies = [...state.vacancies];
@@ -118,14 +118,15 @@ export const deleteVacancy = (id) => async (dispatch) => {
   }
 }
 
-// export const getResumeById = (id) => async (dispatch) => {
-//   try {
-//     const res = await axios.get(`${END_POINT}/api/resume/${id}`)
-//     dispatch(setResume({resume: res.data}))
-//   } catch (error) {
-//     alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
-//   }
-// }
+export const getVacancyById = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${END_POINT}/api/vacancy/${id}`)
+    console.log(res)
+    dispatch(setVacancy({vacancy: res.data}))
+  } catch (error) {
+    alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
+  }
+}
 
 // export const editResume = (sendData, router) => async (dispatch) => {
 //   try {
