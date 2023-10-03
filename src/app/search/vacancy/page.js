@@ -8,9 +8,12 @@ import { useSearchParams } from 'next/navigation'
 import ModalSelectSpec from "@/components/ModalSelectSpec"
 import AutoCompleteSelect from "@/components/AutoCompleteSelect"
 import MyVacancies from '@/components/myvacancies'
+import { useRouter } from 'next/navigation'
+
 export default function SearchVacancy() {
   const dispatch = useDispatch()
   const searchParams = useSearchParams()
+  const router = useRouter()
   // const vacancies = useSelector(state => state.vacancy.vacancies)
   const cities = useSelector(state => state.vacancy.cities)
   const experiences = useSelector(state => state.vacancy.experiences)
@@ -20,16 +23,17 @@ export default function SearchVacancy() {
   
   const [q, setQ] = useState(searchParams.get('q'))
   const [specializationId, setSpecialization] = useState(searchParams.get('specializationId'))
-  const [cityId, setCityId] = useState(searchParams.get('cityId'))
-  const [experienceId, setExperienceId] = useState(searchParams.get('experienceId'))
-  const [employmentTypeId, setEmploymentTypeId] = useState(searchParams.get('employmentTypeId'))
+  const [cityId, setCity] = useState(searchParams.get('cityId'))
+  const [experienceId, setExperience] = useState(searchParams.get('experienceId'))
+  const [employmentTypeId, setEmploymentType] = useState(searchParams.get('employmentTypeId'))
   const [salary, setSalary] = useState(searchParams.get('salary'))
-  const [salary_type, setSalary_type] = useState(searchParams.get('salary_type'))
+  const [salary_type, setSalaryType] = useState(searchParams.get('salary_type'))
   
   const [specializationName, setSpecializationName] = useState()
   const [isSpecModalOpen, setSpecModalOpen] = useState(false)
 
-  useEffect(() => {
+
+  const handleSearch = () => {
     dispatch(getSearchedVacancies({
       q,
       specializationId,
@@ -38,7 +42,14 @@ export default function SearchVacancy() {
       employmentTypeId,
       salary,
       salary_type
-    }))
+    }, router))
+  }
+
+
+  useEffect(handleSearch, [specializationId, cityId,employmentTypeId, salary, salary_type, experienceId])
+
+  useEffect(() => {
+    handleSearch()
 
     dispatch(getSpecializations())
     dispatch(getCities())
@@ -71,7 +82,7 @@ export default function SearchVacancy() {
           <fieldset className="fieldset-vertical" style={{width: '100%'}}> 
             <input className="input" placeholder="Название" type="text" value={q} onChange={(e) => setQ(e.target.value)}  />
           </fieldset>
-          <button className='button button-primary'>Найти</button>
+          <button className='button button-primary' onClick={handleSearch}>Найти</button>
         </div>
       
         <div className='flex'>

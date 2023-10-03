@@ -41,9 +41,9 @@ export default function VacancyPage() {
        
         
        {vacancy.company && <p className='secondary'><b>{vacancy.company.name}</b> </p>}
-       {vacancy.company && <p className='secondary'>{vacancy.company.description}</p>}
+       {vacancy.company && <p className='secondary' >{vacancy.company.description}</p>}
 
-        <p className='secondary'>{vacancy.description}</p>
+        <p className='secondary'  dangerouslySetInnerHTML={{ __html: vacancy.description }}></p>
         <p className='secondary'>{vacancy.address}</p>
 
 
