@@ -13,9 +13,13 @@ export const vacancySlice = createSlice({
     cities: [],
     experiences: [],
     skills: [],
-    employmentTypes: []
+    employmentTypes: [],
+    searchedVacancies: []
   },
   reducers: {
+    setSearchedVacancies: (state, action) => {
+      state.searchedVacancies = action.payload.vacancies
+    },
     setMyVacancies: (state, action) => {
       state.vacancies = action.payload.vacancies
     },
@@ -46,7 +50,7 @@ export const vacancySlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setMyVacancies, setVacancy, handleDeleteVacancy,  setSpecialization, setCities, setExperiences, setSkills, setEmploymentTypes} = vacancySlice.actions
+export const { setMyVacancies, setVacancy, handleDeleteVacancy,  setSpecialization, setCities, setExperiences, setSkills, setEmploymentTypes, setSearchedVacancies} = vacancySlice.actions
 
 
 export const getMyVacancies = () => async (dispatch) => {
@@ -123,6 +127,34 @@ export const getVacancyById = (id) => async (dispatch) => {
     const res = await axios.get(`${END_POINT}/api/vacancy/${id}`)
     console.log(res)
     dispatch(setVacancy({vacancy: res.data}))
+  } catch (error) {
+    alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
+  }
+}
+export const getSearchedVacancies = (params) => async (dispatch) => {
+
+  try {
+    const {
+      q,
+      specializationId,
+      cityId,
+      experienceId,
+      employmentTypeId,
+      salary,
+      salary_type
+    } = params
+    let queryString = '?'
+    if(q) queryString += `q=${q}&`
+    if(specializationId) queryString += `specializationId=${specializationId}&`
+    if(cityId) queryString += `cityId=${cityId}&`
+    if(salary) queryString += `salary=${salary}&`
+    if(salary_type) queryString += `salary_type=${salary_type}&`
+    if(experienceId) queryString += `experienceId=${experienceId}&`
+    if(employmentTypeId) queryString += `employmentTypeId=${employmentTypeId}&`
+
+    const res = await axios.get(`${END_POINT}/api/vacancy/search${queryString}`)
+    console.log(res)
+    dispatch(setSearchedVacancies({vacancies: res.data}))
   } catch (error) {
     alert("Что то пошло не так, сообщите о ошибке тех спецам сайта")
   }

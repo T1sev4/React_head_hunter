@@ -26,9 +26,10 @@ export default function Header(){
             <a>Помощь</a>
           </div>
           <div className="header_right">
-            <button className="header_search">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />              Поиск
-            </button>
+            <Link href="/search/vacancy/advanced" className="header_search">
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+              Поиск
+            </Link>
 
             {currentUser && currentUser.role && currentUser.role.name === "manager" &&   <Link href="/create-vacancy" className="header_button header_button_green">
               Создать вакансию

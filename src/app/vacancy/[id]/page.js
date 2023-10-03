@@ -28,7 +28,7 @@ export default function VacancyPage() {
     <main>
       <Header />
       <div className='container'>
-      {currentUser.id === vacancy.userId &&  <div className='flex flex-ai-c flex-jc-sb ptb7'>
+      {currentUser && currentUser.id === vacancy.userId &&  <div className='flex flex-ai-c flex-jc-sb ptb7'>
           <Link href={`/edit-vacancy/${vacancy.id}`} className='button button_secondary_bordered'>Редактировать</Link>
         </div>}
         <div className='card mt-8'>
@@ -36,7 +36,7 @@ export default function VacancyPage() {
           <p>{vacancy.salary_from &&  `от ${vacancy.salary_from}`}{vacancy.salary_to &&  `до ${vacancy.salary_to}`} {vacancy.salary_type}</p>
           {vacancy.experience && <p>требуемый опыт работы: {vacancy.experience.duration}</p>}
           {vacancy.employmentType && <p> тип занятости {vacancy.employmentType.name}</p>}
-          {currentUser.id !== vacancy.userId && <button className='button button-primary'>Откликнуться</button>}
+          {currentUser && currentUser.id !== vacancy.userId && <button className='button button-primary'>Откликнуться</button>}
         </div>
        
         
