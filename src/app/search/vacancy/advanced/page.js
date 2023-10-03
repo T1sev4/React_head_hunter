@@ -3,7 +3,7 @@
 import Header from "@/components/header"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getSpecializations, getCities, getExperiences, getSkills, getEmploymentTypes, createVacancy } from "@/app/store/slices/vacancySlice"
+import { getSpecializations, getCities, getExperiences, getSkills, getEmploymentTypes } from "@/app/store/slices/vacancySlice"
 import ModalSelectSpec from "@/components/ModalSelectSpec"
 import AutoCompleteSelect from "@/components/AutoCompleteSelect"
 import { useRouter } from "next/navigation"
