@@ -2,31 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { END_POINT } from '@/config/end-point'
-const token = localStorage.getItem("token")
 let initialState = {
   isAuth: false,
   currentUser: null,
   tokenExp: 0,
   error: null
-}
-if(token){
-  let decodedToken = jwt_decode(token)
-  if(decodedToken.exp * 1000 > Date.now()){
-    initialState = {
-      isAuth: true,
-      currentUser: {
-        id: decodedToken.id,
-        email: decodedToken.email,
-        full_name: decodedToken.full_name,
-        phone: decodedToken.phone,
-        role: decodedToken.role
-      },
-      tokenExp: decodedToken.exp
-    }
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  }else{
-    localStorage.removeItem("token");
-  }
 }
 
 

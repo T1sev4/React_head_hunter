@@ -1,16 +1,33 @@
 'use client'
+import jwt_decode from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 // import logo from '../../app/images/hh_logo.svg'
 // import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
-import { logOut } from '@/app/store/slices/authSlice';
+import { logOut, authorize } from '@/app/store/slices/authSlice';
+import { useEffect } from 'react';
 export default function Header(){ 
 
   const isAuth = useSelector((state) => state.auth.isAuth)
   const currentUser = useSelector((state) => state.auth.currentUser)
   const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if(token){
+      let decodedToken = jwt_decode(token)
+      if(decodedToken.exp * 1000 > Date.now()){
+        dispatch(authorize({token}))
+      }else{
+        localStorage.removeItem("token");
+      }
+    }
+    
+  }, [])
+
   return(
     <header className="header">
       <div className="container">
