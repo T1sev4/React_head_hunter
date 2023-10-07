@@ -40,6 +40,7 @@ export default function Header(){
 
             {currentUser && currentUser.role && currentUser.role.name === "manager" && <Link href="/vacancy">Мои вакансии</Link>}
             {currentUser && currentUser.role && currentUser.role.name !== "manager" && <Link href="/resumes">Мои резюме</Link>}
+            {currentUser && currentUser.role && currentUser.role.name !== "manager" &&   <Link href="/applies">Отклики</Link>}
             <a>Помощь</a>
           </div>
           <div className="header_right">

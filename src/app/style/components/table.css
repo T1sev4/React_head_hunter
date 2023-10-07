@@ -14,4 +14,20 @@
 }
 .row-header .col{
   font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+.row-header .col{
+  display: flex;
+  align-items: center;
+}
+.row-header .col img{
+  width: 30px;
+  height: 30px;
+}
+.row-header .col.asc img{
+  transform: rotate(90deg); 
+}
+.row-header .col.desc img{
+  transform: rotate(-90deg); 
 }

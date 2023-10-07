@@ -8,16 +8,16 @@ export default function MyApply({item}){
   return(
     <div className="row flex">
       <div className="col">
-        {item.status}
+        {item && item.status}
       </div>
       <div className="col">
-        {item.vacancy.name}
+        {item && item.vacancy.name}
         <div className="link mt2" onClick={() => dispatch(deleteApply(item.id))}>
           Удалить
         </div>
       </div>
       <div className="col">
-        {item.createdAt}
+        {item && item.updatedAt}
       </div>
     </div>
   )
