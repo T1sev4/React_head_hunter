@@ -19,12 +19,17 @@ export const applySlice = createSlice({
     },
     setApplies: (state, action) => {
       state.applies = action.payload
+    },
+    removeApply: (state, action) => {
+      let applies = [...state.applies];
+      applies = applies.filter(item => item.id !== action.payload)
+      state.applies = applies
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setApplies, appendApply } = applySlice.actions
+export const { setApplies, appendApply, removeApply } = applySlice.actions
 
 export const getEmployeeApplies = (data) => (dispatch) => {
 
@@ -38,6 +43,14 @@ export const createApply = (data) => (dispatch) => {
 
   axios.post(`${END_POINT}/api/applies`, data).then(res => {
     dispatch(appendApply(res.data))
+  }).catch(e => {
+    console.log(e)
+  })
+}
+export const deleteApply = (id) => (dispatch) => {
+
+  axios.delete(`${END_POINT}/api/applies/${id}`).then(res => {
+    dispatch(removeApply(id))
   }).catch(e => {
     console.log(e)
   })
