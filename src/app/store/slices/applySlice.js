@@ -24,12 +24,22 @@ export const applySlice = createSlice({
       let applies = [...state.applies];
       applies = applies.filter(item => item.id !== action.payload)
       state.applies = applies
+    },
+    setApplyStatus: (state, action) => {
+      let applies = [...state.applies];
+      applies = applies.map(item => {
+        if(item.id === action.payload.applyId ){
+          item.status = action.payload.status
+        }
+        return item;
+      })
+      state.applies = applies
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setApplies, appendApply, removeApply } = applySlice.actions
+export const { setApplies, appendApply, removeApply, setApplyStatus } = applySlice.actions
 
 export const getEmployeeApplies = (data) => (dispatch) => {
 
@@ -60,6 +70,23 @@ export const deleteApply = (id) => (dispatch) => {
 
   axios.delete(`${END_POINT}/api/applies/${id}`).then(res => {
     dispatch(removeApply(id))
+  }).catch(e => {
+    console.log(e)
+  })
+}
+
+export const acceptApply = (applyId) => (dispatch) => {
+
+  axios.put(`${END_POINT}/api/applies/accept/employee`, {applyId}).then(res => {
+    dispatch(setApplyStatus({applyId, status: "INVITATION"}))
+  }).catch(e => {
+    console.log(e)
+  })
+}
+export const declineApply = (applyId) => (dispatch) => {
+
+  axios.put(`${END_POINT}/api/applies/decline/employee`, {applyId}).then(res => {
+    dispatch(setApplyStatus({applyId, status: "DECLINED"}))
   }).catch(e => {
     console.log(e)
   })
