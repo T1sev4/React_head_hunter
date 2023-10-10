@@ -8,8 +8,9 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut, authorize } from '@/app/store/slices/authSlice';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 export default function Header(){ 
-
+  const router = useRouter()
   const isAuth = useSelector((state) => state.auth.isAuth)
   const currentUser = useSelector((state) => state.auth.currentUser)
   const dispatch = useDispatch()
@@ -62,7 +63,7 @@ export default function Header(){
               Войти
             </Link>}
 
-            {isAuth && <a className="header_button" onClick={() => dispatch(logOut())}>
+            {isAuth && <a className="header_button" onClick={() => dispatch(logOut(router))}>
               Выйти
             </a>}
           </div>

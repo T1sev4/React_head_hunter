@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { getVacancyApplies } from '@/app/store/slices/applySlice'
 import Applies from '@/components/VacancyApplies'
+import ProtectedRoute from '@/components/ProtectedRoute'
 export default function VacancyApplies() {
   const dispatch = useDispatch()
   const {id} = useParams();
@@ -24,23 +25,25 @@ export default function VacancyApplies() {
   
   
   return (
-    <main className=''>
-      <Header />
-      <div className='container'>
-        <div className='flex flex-ai-c flex-jc-sb ptb7'>
-          <h1>Отклики {applies.length}</h1>
-        </div>
-        <div className='flex flex-jc-sb'>
-          <div className='list'>
-            <div className={`list-item ${status === 'NEW' ? 'active' : '' }`} onClick={() => setStatus("NEW")}>Все неразобранные</div>
-            <div className={`list-item ${status === 'INVITATION' ? 'active' : '' }`} onClick={() => setStatus("INVITATION")}>Приглашенные</div>
-            <div className={`list-item ${status === 'DECLINED' ? 'active' : '' }`} onClick={() => setStatus("DECLINED")}>Отказы</div>
+    <ProtectedRoute>
+      <main className=''>
+        <Header />
+        <div className='container'>
+          <div className='flex flex-ai-c flex-jc-sb ptb7'>
+            <h1>Отклики {applies.length}</h1>
           </div>
-          <Applies applies={filteredApplies} />
-        
+          <div className='flex flex-jc-sb'>
+            <div className='list'>
+              <div className={`list-item ${status === 'NEW' ? 'active' : '' }`} onClick={() => setStatus("NEW")}>Все неразобранные</div>
+              <div className={`list-item ${status === 'INVITATION' ? 'active' : '' }`} onClick={() => setStatus("INVITATION")}>Приглашенные</div>
+              <div className={`list-item ${status === 'DECLINED' ? 'active' : '' }`} onClick={() => setStatus("DECLINED")}>Отказы</div>
+            </div>
+            <Applies applies={filteredApplies} />
+          
+          </div>
+          
         </div>
-        
-      </div>
-    </main>
+      </main>
+    </ProtectedRoute>
   )
 }
