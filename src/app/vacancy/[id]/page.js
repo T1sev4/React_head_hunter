@@ -60,7 +60,7 @@ export default function VacancyPage() {
           <Link href={`/edit-vacancy/${vacancy.id}`} className='button button_secondary_bordered'>Редактировать</Link>
         </div>}
         <div className='card mt-8'>
-          <Link href="/vacancy/2/applies" className='link' >{applies.length} соискателей</Link>
+          <Link href={`/vacancy/${id}/applies`} className='link' >{applies.length} соискателей</Link>
           <h1>{vacancy.name}</h1>
           <p>{vacancy.salary_from &&  `от ${vacancy.salary_from}`}{vacancy.salary_to &&  `до ${vacancy.salary_to}`} {vacancy.salary_type}</p>
           {vacancy.experience && <p>требуемый опыт работы: {vacancy.experience.duration}</p>}
