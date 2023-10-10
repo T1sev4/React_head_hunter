@@ -3,6 +3,7 @@
   border-radius: 8px;
   padding: 5px;
   width: 250px;
+  margin-bottom: auto;
 }
 .list-item{
   padding: 10px;
@@ -19,4 +20,7 @@
 }
 .list-item:last-child{
   margin-bottom: 0;
+}
+.applies{
+  width: calc(100% - 270px);
 }

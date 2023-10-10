@@ -7,7 +7,7 @@ import { getMyVacancies } from '@/app/store/slices/vacancySlice'
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { getVacancyApplies } from '@/app/store/slices/applySlice'
-
+import Applies from '@/components/VacancyApplies'
 export default function VacancyApplies() {
   const dispatch = useDispatch()
   const {id} = useParams();
@@ -19,6 +19,8 @@ export default function VacancyApplies() {
     dispatch(getVacancyApplies(id))
   }, [])
 
+
+  const filteredApplies = applies.filter(item => item.status === status)
   
   
   return (
@@ -34,7 +36,8 @@ export default function VacancyApplies() {
             <div className={`list-item ${status === 'INVITATION' ? 'active' : '' }`} onClick={() => setStatus("INVITATION")}>Приглашенные</div>
             <div className={`list-item ${status === 'DECLINED' ? 'active' : '' }`} onClick={() => setStatus("DECLINED")}>Отказы</div>
           </div>
-          <div>резюме</div>
+          <Applies applies={filteredApplies} />
+        
         </div>
         
       </div>
