@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getVacancyById } from '@/app/store/slices/vacancySlice'
 import { useParams } from 'next/navigation'
 import { getMyResumes } from '@/app/store/slices/resumeSlice'
-import { createApply, getEmployeeApplies } from '@/app/store/slices/applySlice'
+import { createApply, getEmployeeApplies, getVacancyApplies } from '@/app/store/slices/applySlice'
 
 export default function VacancyPage() {
   const dispatch = useDispatch()
@@ -26,9 +26,17 @@ export default function VacancyPage() {
 
   const didMount = () => {
     dispatch(getVacancyById(id))
-    dispatch(getMyResumes())
-    dispatch(getEmployeeApplies())
+  
   }
+  useEffect(() => {
+    if(currentUser && currentUser.role.name === 'employee'){
+      dispatch(getMyResumes())
+      dispatch(getEmployeeApplies())
+    }else if(currentUser && currentUser.role.name !== 'employee'){
+      dispatch(getVacancyApplies(id))
+    }
+  }, [currentUser])
+
   useEffect(didMount, []);
 
  
@@ -52,6 +60,7 @@ export default function VacancyPage() {
           <Link href={`/edit-vacancy/${vacancy.id}`} className='button button_secondary_bordered'>Редактировать</Link>
         </div>}
         <div className='card mt-8'>
+          <Link href="/vacancy/2/applies" className='link' >{applies.length} соискателей</Link>
           <h1>{vacancy.name}</h1>
           <p>{vacancy.salary_from &&  `от ${vacancy.salary_from}`}{vacancy.salary_to &&  `до ${vacancy.salary_to}`} {vacancy.salary_type}</p>
           {vacancy.experience && <p>требуемый опыт работы: {vacancy.experience.duration}</p>}
