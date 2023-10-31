@@ -49,7 +49,7 @@ export default function UserLogin(){
 
   return (
     <section className="login_page">
-      {isAuth ? "true" : "false"}
+
       {step === 1 && <div className="card">
         <h2>Поиск работы</h2>
         <form>

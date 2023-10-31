@@ -1,6 +1,4 @@
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { useSelector } from "react-redux"
 import jwt_decode from "jwt-decode"
 export default function ProtectedRoute({children}){
   const router = useRouter()

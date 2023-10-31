@@ -7,12 +7,12 @@ import { getSpecializations, getCities, getExperiences, getSkills, getEmployment
 import ModalSelectSpec from "@/components/ModalSelectSpec"
 import AutoCompleteSelect from "@/components/AutoCompleteSelect"
 import AutoCompleteTags from "@/components/AutoCompleteTags"
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useRouter } from "next/navigation"
+import dynamic from "next/dynamic"
 
 
 export default function CreateVacancy(){
+  
   const router = useRouter()
   const dispatch = useDispatch();
   const cities = useSelector(state => state.vacancy.cities)
@@ -76,7 +76,8 @@ export default function CreateVacancy(){
 
     }, router))
   }
-
+  const Editor = dynamic(() => import('./editor'), {ssr: false});
+  
   return (
     <main>
       <Header />
@@ -132,27 +133,7 @@ export default function CreateVacancy(){
         <fieldset className="fieldset-vertical"> 
           <label>Расскажите про вакансию</label>
           <div>
-          <CKEditor
-            editor={ ClassicEditor }
-            data={description}
-            onReady={ editor => {
-                // You can store the "editor" and use when it is needed.
-                console.log( 'Editor is ready to use!', editor );
-            } }
-            config={ {
-              toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList', 'redo' ]
-          } }
-            onChange={ ( event, editor ) => {
-                const data = editor.getData();
-                setDescription(data)
-            } }
-            onBlur={ ( event, editor ) => {
-                console.log( 'Blur.', editor );
-            } }
-            onFocus={ ( event, editor ) => {
-                console.log( 'Focus.', editor );
-            } }
-          />
+            <Editor description={description} setDescription={setDescription} />
             
           </div>
         </fieldset>
